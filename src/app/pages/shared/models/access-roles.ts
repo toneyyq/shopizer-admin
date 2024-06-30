@@ -1,18 +1,18 @@
 export const roles = [
   {
     'id': 1,
-    'name': 'STORE_ADMIN'
+    'name': 'STORE_ADMIN',
   },
   {
     'id': 2,
-    'name': 'SUPERADMIN'
+    'name': 'SUPERADMIN',
   },
   {
     'id': 3,
-    'name': 'ADMIN'
+    'name': 'ADMIN',
   },
   {
     'id': 6,
-    'name': 'ORDER'
-  }
+    'name': 'ORDER',
+  },
 ];

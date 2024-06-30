@@ -13,7 +13,7 @@ import { error } from '@angular/compiler/src/util';
 @Component({
   selector: 'ngx-variation-add',
   templateUrl: './add-variations.component.html',
-  styleUrls: ['./add-variations.component.scss']
+  styleUrls: ['./add-variations.component.scss'],
 })
 export class AddVariationsComponent implements OnInit {
   isCodeExist = false;
@@ -23,14 +23,14 @@ export class AddVariationsComponent implements OnInit {
   // isValidOption = true;
 
   defaultParam = {
-  }
+  };
 
   opt = {
     id: '',
     code: '',
     option: '',
-    optionValue: ''
-  }
+    optionValue: '',
+  };
   loading: boolean = false;
   form: FormGroup;
   productOption: Array<any> = [];
@@ -46,14 +46,14 @@ export class AddVariationsComponent implements OnInit {
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.getOption()
+    this.getOption();
   }
 
   loadDefaultParam() {
     this.defaultParam = {
-      "lang": this.storageService.getLanguage,
-      "store": this.storageService.getMerchant
-    }
+      'lang': this.storageService.getLanguage,
+      'store': this.storageService.getMerchant,
+    };
   }
   ngOnInit() {
     this.loadDefaultParam();
@@ -105,7 +105,7 @@ export class AddVariationsComponent implements OnInit {
     this.form.patchValue({
       code: this.opt.code,
       option: this.opt.option,
-      optionValue: this.opt.optionValue
+      optionValue: this.opt.optionValue,
     });
 
     if (this.opt.id) {
@@ -118,14 +118,14 @@ export class AddVariationsComponent implements OnInit {
     this.form = this.fb.group({
       code: [{ value: '', disabled: false }, [Validators.required, Validators.pattern(validators.alphanumeric)]],
       option: ['', [Validators.required]],
-      optionValue: ['', [Validators.required]]
+      optionValue: ['', [Validators.required]],
     });
   }
 
 
   getOption() {
-    this.productOption = []
-    this.loading = true
+    this.productOption = [];
+    this.loading = true;
     this.optionService.getListOfOptions({})
       .subscribe((res) => {
         res.options.map((value) => {
@@ -133,17 +133,17 @@ export class AddVariationsComponent implements OnInit {
             return el.language === this.storageService.getLanguage();
           });
           const name = description && description.name ? description.name : '';
-          this.productOption.push({ id: value.id, code: value.code, name: name })
-        })
-      }, error => {
-        //TODO error
+          this.productOption.push({ id: value.id, code: value.code, name: name });
+        });
+      }, (error: any) => {
+        // TODO error
         this.loading = false;
       });
     this.getOptionValue();
     this.loading = false;
   }
   getOptionValue() {
-    this.productOptionValue = []
+    this.productOptionValue = [];
     this.optionValuesService.getListOfOptionValues({})
       .subscribe(res => {
         // console.log(res);
@@ -152,10 +152,10 @@ export class AddVariationsComponent implements OnInit {
             return el.language === this.storageService.getLanguage();
           });
           const name = description && description.name ? description.name : '';
-          this.productOptionValue.push({ id: value.id, code: value.code, name: name })
-        })
+          this.productOptionValue.push({ id: value.id, code: value.code, name: name });
+        });
       }, error => {
-        //TODO error
+        // TODO error
         this.loading = false;
       });
   }
@@ -178,7 +178,7 @@ export class AddVariationsComponent implements OnInit {
     // this.isValidCode = true;
     this.variationService.checkCode(event.target.value)
       .subscribe(res => {
-        //console.log(res)
+        // console.log(res)
         this.isCodeExist = res.exists;
       });
   }
@@ -219,8 +219,7 @@ export class AddVariationsComponent implements OnInit {
       //       this.loading = false;
       //     });
 
-    }
-    else {
+    } else {
       this.variationService.addVariations(this.form.value)
         .subscribe((res) => {
           this.toastr.success(this.translate.instant('OPTION.SET_OPTION_CREATED'));

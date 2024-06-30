@@ -11,7 +11,7 @@ export class ActiveButtonComponent {
   @Input() rowData: any;
 
   constructor(
-    private productGroupsService: ProductGroupsService
+    private productGroupsService: ProductGroupsService,
   ) {
   }
 

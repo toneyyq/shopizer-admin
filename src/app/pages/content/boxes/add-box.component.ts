@@ -15,7 +15,7 @@ import { Description } from '../../shared/models/description';
 declare var jquery: any;
 declare var $: any;
 @Component({
-  selector: 'add-box',
+  selector: 'ngx-add-box',
   templateUrl: './add-box.component.html',
   styleUrls: ['./add-box.component.scss'],
 })
@@ -27,22 +27,22 @@ export class AddBoxComponent implements OnInit {
 
   languages = [];
 
-  uniqueCode: string;//identifier fromroute
+  uniqueCode: string; // identifier fromroute
   isCodeExists = false;
-  action: any = 'save'
+  action: any = 'save';
 
-  //default selected lang
+  // default selected lang
   defaultLanguage = localStorage.getItem('lang');
-  //changed from seo section
+  // changed from seo section
   currentLanguage = localStorage.getItem('lang');
   uploadData = new FormData();
-  description: Array<any> = []
+  description: Array<any> = [];
   page = {
     visible: false,
     mainmenu: false,
     code: '',
     order: '',
-  }
+  };
   config = {
     placeholder: '',
     tabsize: 2,
@@ -54,12 +54,12 @@ export class AddBoxComponent implements OnInit {
       ['fontsize', ['fontname', 'fontsize', 'color']],
       ['para', ['style', 'ul', 'ol', 'height']],
       ['insert', ['table', 'link', 'video']],
-      ['customButtons', ['testBtn']]
+      ['customButtons', ['testBtn']],
     ],
     buttons: {
-      'testBtn': this.customButton.bind(this)
+      'testBtn': this.customButton.bind(this),
     },
-    fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
+    fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times'],
   };
   params = this.param();
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
@@ -71,13 +71,13 @@ export class AddBoxComponent implements OnInit {
     private configService: ConfigService,
     private dialogService: NbDialogService,
     private activatedRoute: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) { }
 
   param() {
     return {
       store: localStorage.getItem('merchant'),
-      lang: "_all"
+      lang: '_all',
     };
   }
   ngOnInit() {
@@ -88,7 +88,7 @@ export class AddBoxComponent implements OnInit {
     const languages = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
       .subscribe((languages) => {
         this.languages = [...languages];
-        this.addFormArray();//create array
+        this.addFormArray(); // create array
         if (this.uniqueCode != null) {
           this.action = 'edit';
           this.loadContent();
@@ -130,8 +130,8 @@ export class AddBoxComponent implements OnInit {
           description: [''],
           name: [''],
           title: [''],
-          id: 0
-        })
+          id: 0,
+        }),
       );
     });
   }
@@ -159,7 +159,7 @@ export class AddBoxComponent implements OnInit {
               language: description.language,
               description: description.description,
               name: description.name,
-              title: description.title
+              title: description.title,
             });
           }
         });
@@ -167,8 +167,8 @@ export class AddBoxComponent implements OnInit {
     });
   }
 
-  private checkCode(event) {
-    //check if box code already exists
+  protected checkCode(event) {
+    // check if box code already exists
     const code = event.target.value.trim();
     this.crudService.get('/v1/private/content/box/' + code + '/exists', this.param())
       .subscribe(res => {
@@ -177,17 +177,17 @@ export class AddBoxComponent implements OnInit {
 
   }
 
-  private save() {
+  protected save() {
     this.form.markAllAsTouched();
     if (this.findInvalidControls().length > 0) {
       return;
     }
     this.loader = true;
 
-    //manouver resulting object
-    var object = this.form.value;
+    // manouver resulting object
+    const object = this.form.value;
 
-    //remove un necessary
+    // remove un necessary
     delete object.selectedLanguage;
 
 
@@ -196,7 +196,7 @@ export class AddBoxComponent implements OnInit {
      */
     const tmpObj = {
       name: '',
-      friendlyUrl: ''
+      friendlyUrl: '',
     };
     object.descriptions.forEach((el) => {
       if (el.name === '') {
@@ -238,14 +238,14 @@ export class AddBoxComponent implements OnInit {
       return;
     }
     **/
-    //for debugging
-    //console.log(JSON.stringify(categoryObject));
-    //return;
+    // for debugging
+    // console.log(JSON.stringify(categoryObject));
+    // return;
 
-    //console.log('Content saved ' + JSON.stringify(object));
+    // console.log('Content saved ' + JSON.stringify(object));
 
-    if (object.id > 0) {//update
-      //set content name required field
+    if (object.id > 0) {// update
+      // set content name required field
       this.crudService.put('/v1/private/content/box/' + this.content.id, object, this.param())
         .subscribe(data => {
           this.loader = false;
@@ -318,7 +318,7 @@ export class AddBoxComponent implements OnInit {
       className: 'note-btn',
       click: function () {
         me.dialogService.open(ImageBrowserComponent, {}).onClose.subscribe(name => name && context.invoke('editor.pasteHTML', '<img src="' + name + '">'));
-      }
+      },
     });
     return button.render();
   }

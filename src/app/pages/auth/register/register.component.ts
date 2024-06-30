@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'ngx-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
   showPass = 0;
@@ -33,8 +33,8 @@ export class RegisterComponent implements OnInit {
     city: '',
     postalCode: '',
     country: '',
-    state: ''
-  }
+    state: '',
+  };
   countries: Array<any> = [];
   provinces: Array<any> = [];
   constructor(
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
     private translate: TranslateService,
     private configService: ConfigService,
     private location: Location,
-    private platformLocation: PlatformLocation
+    private platformLocation: PlatformLocation,
   ) {
     this.configService.getListOfCountries()
       .subscribe(data => {
@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
     const code = event.target.value;
     this.authService.checkIfStoreExist(code)
       .subscribe(res => {
-        console.log(res);
+        alert(res);
         this.isCodeUnique = res.exists;
       });
   }
@@ -85,34 +85,33 @@ export class RegisterComponent implements OnInit {
   showPassword() {
     if (this.showPass == 0) {
       this.showPass = 1;
-    }
-    else {
+    } else {
       this.showPass = 0;
     }
   }
 
   onRegister() {
-    let param = {
-      "address": this.user.address,
-      "city": this.user.city,
-      "code": this.user.code,
-      "country": this.user.country,
-      "email": this.user.email,
-      "firstName": this.user.firstName,
-      "lastName": this.user.lastName,
-      "name": this.user.name,
-      "password": this.user.password,
-      "postalCode": this.user.postalCode,
-      "repeatPassword": this.user.repeatPassword,
-      "stateProvince": this.user.state,
-      "url": (this.platformLocation as any).location.origin + this.location.prepareExternalUrl('/')
+    const param = {
+      'address': this.user.address,
+      'city': this.user.city,
+      'code': this.user.code,
+      'country': this.user.country,
+      'email': this.user.email,
+      'firstName': this.user.firstName,
+      'lastName': this.user.lastName,
+      'name': this.user.name,
+      'password': this.user.password,
+      'postalCode': this.user.postalCode,
+      'repeatPassword': this.user.repeatPassword,
+      'stateProvince': this.user.state,
+      'url': (this.platformLocation as any).location.origin + this.location.prepareExternalUrl('/'),
 
-    }
+    };
     this.authService.register(param)
       .subscribe(res => {
-        console.log(res);
-        this.errorMessage = ""
-        this.successMessage = "Your account is created successfully and email has been sent to " + this.user.email + " with details on completing the new store signup"
+        alert(res);
+        this.errorMessage = '';
+        this.successMessage = 'Your account is created successfully and email has been sent to ' + this.user.email + ' with details on completing the new store signup';
         this.user = {
           firstName: '',
           lastName: '',
@@ -125,11 +124,11 @@ export class RegisterComponent implements OnInit {
           city: '',
           postalCode: '',
           country: '',
-          state: ''
-        }
+          state: '',
+        };
 
       }, err => {
-        console.log(err);
+        alert(err);
         if (err.status === 0) {
           this.errorMessage = this.translate.instant('COMMON.INTERNAL_SERVER_ERROR');
         } else {

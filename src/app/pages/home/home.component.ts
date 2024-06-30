@@ -12,7 +12,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'ngx-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
   loading = false;
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     postalCode: '',
     country: '',
     defaultLanguage: '',
-    phone: ''
+    phone: '',
   };
   canAccessToOrder: boolean;
   userId;
@@ -41,18 +41,22 @@ export class HomeComponent implements OnInit {
   ) {
     this.userService.getUserProfile()
       .subscribe(user => {
-        //console.log(this.userService.roles);
+        // console.log(this.userService.roles);
         this.userService.checkForAccess(user.groups);
         this.canAccessToOrder = this.userService.roles.canAccessToOrder;
       });
   }
 
   ngOnInit() {
-    let lang = this.storageService.getLanguage()
+    const lang = this.storageService.getLanguage();
     this.loading = true;
     const store = localStorage.getItem('merchant');
-    forkJoin([this.crudService.listCountriesByLanguage(lang), this.userService.getUserProfile(), this.userService.getMerchant(store)])
-      .subscribe(([countries, user, merchant]) => {
+    const countriesObservable = this.crudService.listCountriesByLanguage(lang);
+    const userProfileObservable = this.userService.getUserProfile();
+    const merchantObservable = this.userService.getMerchant(store);
+
+    forkJoin([countriesObservable, userProfileObservable, merchantObservable])
+        .subscribe(([countries, user, merchant]) => {
         this._countryArray = countries;
         this.user.userName = user.userName;
         this.user.lastAccess = user.lastAccess;
@@ -69,7 +73,7 @@ export class HomeComponent implements OnInit {
         localStorage.setItem('merchantName', merchant.name);
         localStorage.setItem('supportedLanguages', JSON.stringify(merchant.supportedLanguages));
 
-        //require merchant country
+        // require merchant country
         localStorage.setItem('defaultCountry', merchant.address.country);
 
         this.loading = false;
@@ -77,11 +81,11 @@ export class HomeComponent implements OnInit {
   }
 
   setLanguage() {
-    if(this.user.defaultLanguage != null) {
+    if (this.user.defaultLanguage != null) {
       localStorage.setItem('lang', this.user.defaultLanguage);
       this.translate.setDefaultLang(localStorage.getItem('lang'));
       this.translate.use(localStorage.getItem('lang'));
-    } else { //default system language
+    } else { // default system language
       localStorage.setItem('lang', environment.client.language.default);
     }
   }
@@ -91,11 +95,11 @@ export class HomeComponent implements OnInit {
   }
 
   deleteCache() {
-    //start loading
+    // start loading
     this.loading = true;
-    //invoke backend
-    //return status
-    //stop loading
+    // invoke backend
+    // return status
+    // stop loading
   }
 
 }
