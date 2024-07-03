@@ -594,7 +594,8 @@
     "en": "English",
     "fr": "French",
     "ru": "Russian",
-    "es": "Spanish"
+    "es": "Spanish",
+    "zh": "Chinese"
   },
   "filemanager": {
     "title": "File Manager",
