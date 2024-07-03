@@ -16,7 +16,7 @@ import { environment } from '../../../environments/environment';
 })
 export class HomeComponent implements OnInit {
   loading = false;
-  loadingList: boolean = false;
+  loadingList = false;
   user = {
     userName: '',
     lastAccess: '',
