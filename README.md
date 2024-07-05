@@ -9,7 +9,9 @@ Requires Angular cli installed (npm install -g @angular/cli@13.3.x)
 
 
 ## Run locally
-
+### windows del node_modules dir files
+rd /s /q "D:\data_ryan\Shopizer\shopizer-admin\node_modules" 
+### Rum install
 npm install --legacy-peer-deps
 
 ng serve -o
