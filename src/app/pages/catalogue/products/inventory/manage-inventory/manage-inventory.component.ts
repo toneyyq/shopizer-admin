@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'ngx-manage-inventory',
   templateUrl: './manage-inventory.component.html',
-  styleUrls: ['./manage-inventory.component.scss']
+  styleUrls: ['./manage-inventory.component.scss'],
 })
 export class ManageInventoryComponent implements OnInit {
 
@@ -92,7 +92,7 @@ export class ManageInventoryComponent implements OnInit {
         sort: true,
         custom: [
           { name: 'details', title: '<i class="nb-edit"></i>' },
-          { name: 'remove', title: '<i class="nb-trash"></i>' }
+          { name: 'remove', title: '<i class="nb-trash"></i>' },
         ],
       },
       pager: { display: false },
@@ -103,7 +103,7 @@ export class ManageInventoryComponent implements OnInit {
           editable: false,
           valuePrepareFunction: (store) => {
             return store.code;
-          }
+          },
         },
         owner: {
           title: this.translate.instant('INVENTORY.INVENTORY_OWNER'),
@@ -111,12 +111,12 @@ export class ManageInventoryComponent implements OnInit {
           editable: false,
           valuePrepareFunction: (owner) => {
             return owner ? owner : 'null';
-          }
+          },
         },
         quantity: {
           title: this.translate.instant('PRODUCT.QTY'),
           type: 'number',
-          editable: true
+          editable: true,
         },
         prices: {
           title: this.translate.instant('PRODUCT.PRICE'),
@@ -124,12 +124,12 @@ export class ManageInventoryComponent implements OnInit {
           editable: true,
           valuePrepareFunction: (prices) => {
             return (prices.length && prices[0].originalPrice) ? prices[0].originalPrice : 'null';
-          }
+          },
         },
         creationDate: {
           title: this.translate.instant('PRODUCT.CREATION_DATE'),
           type: 'string',
-          editable: false
+          editable: false,
         },
       },
     };
