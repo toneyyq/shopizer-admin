@@ -1,8 +1,8 @@
 # Shopizer Administration (shopizer-admin) Angular web app
 
-## Tested with node v12.22.7
+## Tested with node v12.22.7   12.22.12
 
-Requires Angular cli installed (npm install -g @angular/cli@13.3.x)
+Requires Angular cli installed (npm install -g @angular/cli@13.3.x)13.3.11
 
 # Set backend api
 
@@ -12,12 +12,13 @@ Requires Angular cli installed (npm install -g @angular/cli@13.3.x)
 ### windows del node_modules dir files
 rd /s /q "D:\data_ryan\Shopizer\shopizer-admin\node_modules" 
 ### Rum install
+```shell
 rmdir /s /q node_modules
 npm cache clean --force
 npm install --legacy-peer-deps
 
 ng serve -o
-
+```
 http://localhost:4200
 
 ## Build app
